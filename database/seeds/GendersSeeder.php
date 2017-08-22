@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use TaleOfOrigin\Gender;
 
 class GendersSeeder extends Seeder
 {
@@ -11,61 +12,61 @@ class GendersSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('genders')->insert(['gender' => 'Agender']);
-        DB::table('genders')->insert(['gender' => 'Androgyne']);
-        DB::table('genders')->insert(['gender' => 'Androgynous']);
-        DB::table('genders')->insert(['gender' => 'Bigender']);
-        DB::table('genders')->insert(['gender' => 'Cis']);
-        DB::table('genders')->insert(['gender' => 'Cisgender']);
-        DB::table('genders')->insert(['gender' => 'Cis Female']);
-        DB::table('genders')->insert(['gender' => 'Cis Male']);
-        DB::table('genders')->insert(['gender' => 'Cis Man']);
-        DB::table('genders')->insert(['gender' => 'Cis Woman']);
-        DB::table('genders')->insert(['gender' => 'Cisgender Female']);
-        DB::table('genders')->insert(['gender' => 'Cisgender Male']);
-        DB::table('genders')->insert(['gender' => 'Cisgender Man']);
-        DB::table('genders')->insert(['gender' => 'Cisgender Woman']);
-        DB::table('genders')->insert(['gender' => 'Female']);
-        DB::table('genders')->insert(['gender' => 'Female to Male']);
-        DB::table('genders')->insert(['gender' => 'Gender Fluid']);
-        DB::table('genders')->insert(['gender' => 'Gender Nonconforming']);
-        DB::table('genders')->insert(['gender' => 'Gender Questioning']);
-        DB::table('genders')->insert(['gender' => 'Gender Variant']);
-        DB::table('genders')->insert(['gender' => 'Genderqueer']);
-        DB::table('genders')->insert(['gender' => 'Intersex']);
-        DB::table('genders')->insert(['gender' => 'Male']);
-        DB::table('genders')->insert(['gender' => 'Male to Female']);
-        DB::table('genders')->insert(['gender' => 'Neither']);
-        DB::table('genders')->insert(['gender' => 'Neutrois']);
-        DB::table('genders')->insert(['gender' => 'Non-binary']);
-        DB::table('genders')->insert(['gender' => 'Other']);
-        DB::table('genders')->insert(['gender' => 'Pangender']);
-        DB::table('genders')->insert(['gender' => 'Trans']);
-        DB::table('genders')->insert(['gender' => 'Trans*']);
-        DB::table('genders')->insert(['gender' => 'Trans Female']);
-        DB::table('genders')->insert(['gender' => 'Trans* Female']);
-        DB::table('genders')->insert(['gender' => 'Trans Male']);
-        DB::table('genders')->insert(['gender' => 'Trans* Male']);
-        DB::table('genders')->insert(['gender' => 'Trans Man']);
-        DB::table('genders')->insert(['gender' => 'Trans* Man']);
-        DB::table('genders')->insert(['gender' => 'Trans Person']);
-        DB::table('genders')->insert(['gender' => 'Trans* Person']);
-        DB::table('genders')->insert(['gender' => 'Trans Woman']);
-        DB::table('genders')->insert(['gender' => 'Trans* Woman']);
-        DB::table('genders')->insert(['gender' => 'Transfeminine']);
-        DB::table('genders')->insert(['gender' => 'Transgender']);
-        DB::table('genders')->insert(['gender' => 'Transgender Female']);
-        DB::table('genders')->insert(['gender' => 'Transgender Male']);
-        DB::table('genders')->insert(['gender' => 'Transgender Man']);
-        DB::table('genders')->insert(['gender' => 'Transgender Person']);
-        DB::table('genders')->insert(['gender' => 'Transgender Woman']);
-        DB::table('genders')->insert(['gender' => 'Transmasculine']);
-        DB::table('genders')->insert(['gender' => 'Transsexual']);
-        DB::table('genders')->insert(['gender' => 'Transsexual Female']);
-        DB::table('genders')->insert(['gender' => 'Transsexual Male']);
-        DB::table('genders')->insert(['gender' => 'Transsexual Man']);
-        DB::table('genders')->insert(['gender' => 'Transsexual Person']);
-        DB::table('genders')->insert(['gender' => 'Transsexual Woman']);
-        DB::table('genders')->insert(['gender' => 'Two-Spirit']);
+         Gender::create(['title' => 'Agender']);
+         Gender::create(['title' => 'Androgyne']);
+         Gender::create(['title' => 'Androgynous']);
+         Gender::create(['title' => 'Bigender']);
+         Gender::create(['title' => 'Cis']);
+         Gender::create(['title' => 'Cisgender']);
+         Gender::create(['title' => 'Cis Female']);
+         Gender::create(['title' => 'Cis Male']);
+         Gender::create(['title' => 'Cis Man']);
+         Gender::create(['title' => 'Cis Woman']);
+         Gender::create(['title' => 'Cisgender Female']);
+         Gender::create(['title' => 'Cisgender Male']);
+         Gender::create(['title' => 'Cisgender Man']);
+         Gender::create(['title' => 'Cisgender Woman']);
+         Gender::create(['title' => 'Female']);
+         Gender::create(['title' => 'Female to Male']);
+         Gender::create(['title' => 'Gender Fluid']);
+         Gender::create(['title' => 'Gender Nonconforming']);
+         Gender::create(['title' => 'Gender Questioning']);
+         Gender::create(['title' => 'Gender Variant']);
+         Gender::create(['title' => 'Genderqueer']);
+         Gender::create(['title' => 'Intersex']);
+         Gender::create(['title' => 'Male']);
+         Gender::create(['title' => 'Male to Female']);
+         Gender::create(['title' => 'Neither']);
+         Gender::create(['title' => 'Neutrois']);
+         Gender::create(['title' => 'Non-binary']);
+         Gender::create(['title' => 'Other']);
+         Gender::create(['title' => 'Pangender']);
+         Gender::create(['title' => 'Trans']);
+         Gender::create(['title' => 'Trans*', 'slug' => 'trans-star']);
+         Gender::create(['title' => 'Trans Female']);
+         Gender::create(['title' => 'Trans* Female', 'slug' => 'trans-star-female']);
+         Gender::create(['title' => 'Trans Male']);
+         Gender::create(['title' => 'Trans* Male', 'slug' => 'trans-star-male']);
+         Gender::create(['title' => 'Trans Man']);
+         Gender::create(['title' => 'Trans* Man', 'slug' => 'trans-star-man']);
+         Gender::create(['title' => 'Trans Person']);
+         Gender::create(['title' => 'Trans* Person', 'slug' => 'trans-star-person']);
+         Gender::create(['title' => 'Trans Woman']);
+         Gender::create(['title' => 'Trans* Woman', 'slug' => 'trans-star-woman']);
+         Gender::create(['title' => 'Transfeminine']);
+         Gender::create(['title' => 'Transgender']);
+         Gender::create(['title' => 'Transgender Female']);
+         Gender::create(['title' => 'Transgender Male']);
+         Gender::create(['title' => 'Transgender Man']);
+         Gender::create(['title' => 'Transgender Person']);
+         Gender::create(['title' => 'Transgender Woman']);
+         Gender::create(['title' => 'Transmasculine']);
+         Gender::create(['title' => 'Transsexual']);
+         Gender::create(['title' => 'Transsexual Female']);
+         Gender::create(['title' => 'Transsexual Male']);
+         Gender::create(['title' => 'Transsexual Man']);
+         Gender::create(['title' => 'Transsexual Person']);
+         Gender::create(['title' => 'Transsexual Woman']);
+         Gender::create(['title' => 'Two-Spirit']);
     }
 }
