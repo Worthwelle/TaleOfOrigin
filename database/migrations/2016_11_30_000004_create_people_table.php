@@ -16,8 +16,6 @@ class CreatePeopleTable extends Migration
             $table->increments('id');
             $table->integer('tree_id')->unsigned();
             $table->string('name');
-            $table->integer('father_id')->unsigned()->nullable();
-            $table->integer('mother_id')->unsigned()->nullable();
             $table->datetime('birth')->nullable();
             $table->datetime('death')->nullable();
             $table->integer('gender_id')->unsigned()->nullable();

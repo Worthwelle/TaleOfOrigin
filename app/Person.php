@@ -2,9 +2,9 @@
 
 namespace TaleOfOrigin;
 
-use TaleOfOrigin\SlugModel;
+use Illuminate\Database\Eloquent\Model;
 
-class Person extends SlugModel
+class Person extends Model
 {
     
     /**
@@ -13,7 +13,7 @@ class Person extends SlugModel
      * @var string
      */
     protected $table = 'people';
-    protected $fillable = ['title', 'slug'];
+    protected $fillable = ['tree_id','name','birth','death','gender_id','religion','cause_of_death','notes'];
     
     public function tree() {
         return $this->belongsTo('TaleOfOrigin\Tree');
@@ -27,24 +27,37 @@ class Person extends SlugModel
         return $this->belongsTo('TaleOfOrigin\Religion');
     }
     
-    public function mother() {
-        return $this->hasOne('TaleOfOrigin\Person', 'id', 'mother_id');
+    public function getMotherAttribute() {
+        $first = $this->relationships1()->wherePivot('role2_id','=',\TaleOfOrigin\Role::where('title','=','Mother')->first()->id)->first();
+        if( $first !== null ) {
+            return $first;
+        }
+        return $this->relationships2()->wherePivot('role1_id','=',\TaleOfOrigin\Role::where('title','=','Mother')->first()->id)->first();
     }
     
-    public function father() {
-        return $this->hasOne('TaleOfOrigin\Person', 'id', 'father_id');
-    }
-    
-    public function motherChildren() {
-        return $this->hasMany('TaleOfOrigin\Person', 'mother_id');
-    }
-    
-    public function fatherChildren() {
-        return $this->hasMany('TaleOfOrigin\Person', 'father_id');
+    public function getFatherAttribute() {
+        $first = $this->relationships1()->wherePivot('role2_id','=',\TaleOfOrigin\Role::where('title','=','Father')->first()->id)->first();
+        if( $first !== null ) {
+            return $first;
+        }
+        return $this->relationships2()->wherePivot('role1_id','=',\TaleOfOrigin\Role::where('title','=','Father')->first()->id)->first();
     }
     
     public function children($exclude = null) {
-        return $this->motherChildren->merge($this->fatherChildren)->except($exclude);
+        return $this->relationships1()->wherePivot('role1_id','=',\TaleOfOrigin\Role::where('title','=','Father')->first()->id)->get()
+               ->merge($this->relationships1()->wherePivot('role1_id','=',\TaleOfOrigin\Role::where('title','=','Mother')->first()->id)->get()
+               ->merge($this->relationships2()->wherePivot('role2_id','=',\TaleOfOrigin\Role::where('title','=','Father')->first()->id)->get()
+               ->merge($this->relationships2()->wherePivot('role2_id','=',\TaleOfOrigin\Role::where('title','=','Mother')->first()->id))))->except($exclude);
+    }
+    
+    public function relationships1() {
+        return $this->belongsToMany('TaleOfOrigin\Person', 'person_relationships', 'person1_id', 'person2_id')
+                    ->withPivot('relationship_id', 'role1_id', 'role2_id');
+    }
+    
+    public function relationships2() {
+        return $this->belongsToMany('TaleOfOrigin\Person', 'person_relationships', 'person2_id', 'person1_id')
+                    ->withPivot('relationship_id', 'role1_id', 'role2_id');
     }
     
     public function siblings() {
