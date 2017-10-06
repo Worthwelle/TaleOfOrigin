@@ -14,16 +14,16 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = [
-        'name', 'email', 'password',
-    ];
+    protected $fillable = ['name', 'email', 'password'];
 
     /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
      */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+    protected $hidden = ['salt', 'password', 'remember_token'];
+    
+    public function memories() {
+        return $this->hasMany('TaleOfOrigin\Memory');
+    }
 }
