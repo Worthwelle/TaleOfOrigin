@@ -1,0 +1,19 @@
+<a href="#tree/{{person.tree.id}}">Back to the family tree</a>
+<h1><span  class="{{person.gender.slug}}"></span> {{person.name}}</h1>
+<p>{{person.birth}} - {{person.death}}</p>
+
+<br><b>Mother:</b> <a href="#person/{{person.mother.id}}">{{person.mother.name}}</a>
+<br><b>Father:</b> <a href="#person/{{person.father.id}}">{{person.father.name}}</a>
+
+<br><b>Children:</b>
+<ul class="tree" ng-repeat="child in person.children">
+    <li class="{{child.gender.slug}}"><a href="#person/{{child.id}}">{{child.name}}</a></li>
+</ul>
+
+<br><b>Siblings</b>
+<ul class="tree" ng-repeat="sibling in person.siblings">
+    <li class="{{sibling.gender.slug}}"><a href="#person/{{sibling.id}}">{{sibling.name}}</a></li>
+</ul>
+
+<br><b>Notes:</b>
+<div ng-bind-html="person.notes"></div>

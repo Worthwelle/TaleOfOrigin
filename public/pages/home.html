@@ -1,0 +1,6 @@
+<div ng-repeat="tree in trees">
+    <h1><a href="#/tree/{{tree.id}}">{{tree.title}}</a> ({{tree.people.length}})</h1>
+    <ul class="tree" ng-repeat="person in tree.people">
+        <li class="{{person.gender.slug}}"><a href="#person/{{person.id}}">{{person.name}}</a></li>
+    </ul>
+</div>
