@@ -86,7 +86,7 @@ class GendersTest extends TestCase
     }
     
     /**
-     * Update a non-existant gender item.
+     * Update a non-existent gender item.
      *
      * @return void
      */
