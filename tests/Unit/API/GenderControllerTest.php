@@ -5,7 +5,7 @@ namespace Tests\Unit\API;
 use Tests\TestCase;
 use TaleOfOrigin\Gender;
 
-class GendersTest extends TestCase
+class GenderControllerTest extends TestCase
 {
     
     /**
