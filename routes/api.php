@@ -13,6 +13,20 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => ['api'], 'prefix' => '/v1'], function () {
+    Route::get('/version', function() {
+        return response()->json([
+            'app' => config('app.name'),
+            'version' => config('app.version'),
+            'api' => 'v1'
+        ]);
+    });
+    Route::resource('gender', 'GenderController');
+    Route::resource('religion', 'ReligionController');
+    Route::resource('person', 'PersonController');
+    Route::resource('tree', 'TreeController');
+    Route::resource('relationship', 'RelationshipController');
+    Route::resource('role', 'RoleController');
+    Route::resource('person_relationship', 'PersonRelationshipController');
+    Route::resource('user', 'UserController');
 });
