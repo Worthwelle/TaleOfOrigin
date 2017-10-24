@@ -29,4 +29,10 @@ Route::group(['middleware' => ['api'], 'prefix' => '/v1'], function () {
     Route::resource('role', 'RoleController');
     Route::resource('person_relationship', 'PersonRelationshipController');
     Route::resource('user', 'UserController');
+    Route::get('/trees/{id}', function($id) {
+        $trees = Cache::remember('TreeIndexUser'.$id, 60, function () use ($id) {
+            return TaleOfOrigin\Tree::where('user_id','=',$id)->with('people.gender')->get();
+        });
+        return $trees->toJson();
+    });
 });
