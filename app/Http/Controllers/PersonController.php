@@ -39,8 +39,8 @@ class PersonController extends Controller
         $this->validate($request, [
             'tree_id' => 'required|integer',
             'name' => 'required',
-            'birth' => 'nullable|date',
-            'death' => 'nullable|date',
+            'birth' => 'nullable|date_format:Y-m-d',
+            'death' => 'nullable|date_format:Y-m-d|after_or_equal:birth',
             'gender_id' => 'nullable|integer',
             'religion' => 'nullable|integer',
             'cause_of_death' => 'nullable',
