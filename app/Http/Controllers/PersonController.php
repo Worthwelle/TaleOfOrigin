@@ -3,6 +3,9 @@
 namespace TaleOfOrigin\Http\Controllers;
 
 use TaleOfOrigin\Person;
+use TaleOfOrigin\PersonRelationship;
+use TaleOfOrigin\Role;
+use TaleOfOrigin\Relationship;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
@@ -15,7 +18,7 @@ class PersonController extends Controller
      */
     public function index()
     {
-        //
+        return Person::all();
     }
 
     /**
@@ -44,12 +47,46 @@ class PersonController extends Controller
             'gender_id' => 'nullable|integer',
             'religion' => 'nullable|integer',
             'cause_of_death' => 'nullable',
-            'notes' => 'nullable'
+            'notes' => 'nullable',
+            'mother_id' => 'nullable',
+            'father_id' => 'nullable'
         ]);
         
         $data = $request->all();
         $person = new Person($data);
         $person->save();
+        if($person->gender == "Male") {
+            $child_role = "Son";
+        }
+        elseif($person->gender == "Female") {
+            $child_role = "Daughter";
+        }
+        else {
+            $child_role = "Child";
+        }
+        
+        if(isset($data['mother_id'])) {
+            PersonRelationship::create([
+                'person1_id' => $data['mother_id'],
+                'role1_id' => Role::where('title', '=', "Mother")->first()->id,
+
+                'person2_id' => $person->id,
+                'role2_id' => Role::where('title', '=', $child_role)->first()->id,
+
+                'relationship_id' => Relationship::where('title', '=', 'Parent/Child')->first()->id
+            ]);
+        }
+        if(isset($data['father_id'])) {
+            PersonRelationship::create([
+                'person1_id' => $data['father_id'],
+                'role1_id' => Role::where('title', '=', "Father")->first()->id,
+
+                'person2_id' => $person->id,
+                'role2_id' => Role::where('title', '=', $child_role)->first()->id,
+
+                'relationship_id' => Relationship::where('title', '=', 'Parent/Child')->first()->id
+            ]);
+        }
         return $person;
     }
 

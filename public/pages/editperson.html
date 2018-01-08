@@ -1,36 +1,49 @@
-<a href="#tree/{{person.tree.id}}">Back to the family tree</a>
-<form>
+<a href="#tree/{{tree_id}}">Back to the family tree</a>
+<form ng-submit="submit()">
     <div class="form-group row">
         <div class="col-sm-5">
             <label for="fullname" class="sr-only">Full name</label>
-            <input type="text" class="form-control form-control-lg" id="fullname" placeholder="Full name">
+            <input type="text" class="form-control form-control-lg" id="fullname" ng-model="fullname" placeholder="Full name">
         </div>
     </div>
     
     <div class="form-group row">
         <div class="col-sm-2">
             <label for="birth" class="sr-only">Birth date</label>
-            <input type="text" class="form-control" id="birth" placeholder="Birth date">
+            <input type="text" class="form-control" id="birth" ng-model="birth" placeholder="Birth date">
         </div>
         <div class="col-sm-1">
             <p class="form-control-plaintext text-center">&mdash;</p>
         </div>
         <div class="col-sm-2">
             <label for="death" class="sr-only">Death date</label>
-            <input type="text" class="form-control" id="death" placeholder="Death date">
+            <input type="text" class="form-control" id="death" ng-model="death" placeholder="Death date">
+        </div>
+    </div>
+    
+    <div class="form-group row">
+        <label for="gender" class="col-sm-1 col-form-label">Gender:</label>
+        <div class="col-sm-4">
+            <select class="form-control" id="gender" ng-model="gender">
+                <option ng-repeat="gender in genders" value="{{gender.id}}">{{gender.title}}</option>
+            </select>
         </div>
     </div>
 
     <div class="form-group row">
         <label for="mother" class="col-sm-1 col-form-label">Mother:</label>
         <div class="col-sm-4">
-            <input type="text" class="form-control" id="mother" placeholder="Mother's name">
+            <select class="form-control" id="mother" ng-model="mother">
+                <option ng-repeat="pers in people" value="{{pers.id}}">{{pers.name}}</option>
+            </select>
         </div>
     </div>
     <div class="form-group row">
         <label for="father" class="col-sm-1 col-form-label">Father:</label>
         <div class="col-sm-4">
-            <input type="text" class="form-control" id="father" placeholder="Father's name">
+            <select class="form-control" id="father" ng-model="father">
+                <option ng-repeat="pers in people" value="{{pers.id}}" ng-selected="{{person.father_id == pers.id}}">{{pers.name}}</option>
+            </select>
         </div>
     </div>
 
@@ -57,13 +70,13 @@
     <div class="form-group row">
         <div class="col-sm-5">
             <label for="notes" class="sr-only">Notes</label>
-            <textarea class="form-control" id="notes" rows="3"></textarea>
+            <textarea class="form-control" id="notes" ng-model="notes" rows="3"></textarea>
         </div>
     </div>
     
     <div class="form-group row">
         <div class="col-sm-5 text-right">
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" id="submit" class="btn btn-primary">Submit</button>
         </div>
     </div>
 </form>
