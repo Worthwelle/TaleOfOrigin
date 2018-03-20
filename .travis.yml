@@ -13,7 +13,7 @@ before_script:
   - php artisan key:generate
   - php artisan migrate:install --env=testing --no-interaction -vvv
   - php artisan migrate --env=testing --no-interaction -vvv
-#  - php artisan db:seed --env=testing --no-interaction -vvv
+  - php artisan db:seed --env=testing --no-interaction -vvv --class=TestSeeder
 
 script:
   - vendor/bin/phpunit
