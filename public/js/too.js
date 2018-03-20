@@ -2,7 +2,8 @@
 var tooApp = angular.module('TaleOfOriginAJS', ['ngRoute', 'ngSanitize']);
 
 // create the controller and inject Angular's $scope
-tooApp.config(function($routeProvider) {
+tooApp.config(function($routeProvider,$locationProvider) {
+    $locationProvider.hashPrefix('');
     $routeProvider
 
         // route for the home page
@@ -92,46 +93,42 @@ tooApp.controller('personCreateController', function($scope, $http, $routeParams
     };
 });
 
-tooApp.controller('personEditController', function($scope, $http, $routeParams, $location) {
-    $http.get("api/v1/person/"+$routeParams.id)
+tooApp.controller('personEditController', function($scope, $http, $routeParams, $location, $timeout, $log) {
+    $http.get("api/v1/person/"+$routeParams.id+"/edit")
     .then(function(response) {
-        $scope.person = response.data;
+        $scope.person  = response.data.person;
+        $scope.genders = response.data.genders;
+        $scope.people  = response.data.people;
         $scope.tree_id = $scope.person.tree_id;
     
         $scope.fullname = $scope.person.name;
-        $scope.birth = $scope.person.birth;
-        $scope.death = $scope.person.death;
-        $scope.notes = $scope.person.notes;
-
-        $http.get("api/v1/gender")
-        .then(function(response) {
-            $scope.genders = response.data;
-            $scope.gender = $scope.person.gender_id;
-        });
-        $http.get("api/v1/person")
-        .then(function(response) {
-            $scope.people = response.data;
-            $scope.mother = $scope.person.mother.id;
-            $scope.father = $scope.person.father.id;
-        });
+        $scope.birth    = $scope.person.birth;
+        $scope.death    = $scope.person.death;
+        $scope.notes    = $scope.person.notes;
+        
+        $timeout(function() {
+            if( $scope.person.mother !== null ) $scope.mother = $scope.person.mother.id.toString();
+            if( $scope.person.father !== null ) $scope.father = $scope.person.father.id.toString();
+            if( $scope.person.gender !== null ) $scope.gender = $scope.person.gender.id.toString();
+        }, 500);
     });
     
     $scope.submit = function () {
         var data = {
-            'tree_id': $scope.tree_id,
+            'tree_id': parseInt($scope.tree_id,10),
             'name': $scope.fullname,
             'birth': $scope.birth,
             'death': $scope.death,
-            'gender_id': $scope.gender,
-            'mother_id': $scope.mother,
-            'father_id': $scope.father,
+            'gender_id': parseInt($scope.gender,10),
+            'mother_id': parseInt($scope.mother,10),
+            'father_id': parseInt($scope.father,10),
             'notes': $scope.notes
         };
         $http.put("api/v1/person/"+ $scope.person.id, data)
         .then(function success(response) {
             $location.path("/person/"+response.data.id);
         }, function failure(response) {
-            //
+            $log.error($scope.error = JSON.stringify(response));
         });
     };
 });

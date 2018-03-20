@@ -25,7 +25,7 @@
         <label for="gender" class="col-sm-1 col-form-label">Gender:</label>
         <div class="col-sm-4">
             <select class="form-control" id="gender" ng-model="gender">
-                <option ng-repeat="gender in genders" value="{{gender.id}}">{{gender.title}}</option>
+                <option ng-repeat="gend in genders" value="{{gend.id}}">{{gend.title}}</option>
             </select>
         </div>
     </div>
@@ -42,12 +42,15 @@
         <label for="father" class="col-sm-1 col-form-label">Father:</label>
         <div class="col-sm-4">
             <select class="form-control" id="father" ng-model="father">
-                <option ng-repeat="pers in people" value="{{pers.id}}" ng-selected="{{person.father_id == pers.id}}">{{pers.name}}</option>
+                <option ng-repeat="pers in people" value="{{pers.id}}">{{pers.name}}</option>
             </select>
         </div>
     </div>
 
     <br><b>Children:</b>
+    <ul class="tree" ng-repeat="child in person.children">
+        <li class="{{child.gender.slug}}"><a href="#person/{{child.id}}">{{child.name}}</a> [<a href="#">x</a>]</li>
+    </ul>
     <div class="form-group row">
         <div class="col-sm-5">
             <label for="child[1]" class="sr-only">Child's name</label>
@@ -57,6 +60,9 @@
     <!-- When a child is entered, automatically add another child input (onchange) -->
 
     <br><b>Siblings</b>
+    <ul class="tree" ng-repeat="sibling in person.siblings">
+        <li class="{{sibling.gender.slug}}"><a href="#person/{{sibling.id}}">{{sibling.name}}</a> [<a href="#">x</a>]</li>
+    </ul>
     <div class="form-group row">
         <div class="col-sm-5">
             <label for="sibling[1]" class="sr-only">Sibling's name</label>

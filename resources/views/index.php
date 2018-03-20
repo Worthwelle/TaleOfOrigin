@@ -13,7 +13,7 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <link rel="stylesheet" href="//localhost/too/css/too.css">
+        <link rel="stylesheet" href="<?php echo config('app.url') ?>/css/too.css">
         
         <link rel="apple-touch-icon" sizes="57x57" href="/img/favicon/apple-icon-57x57.png">
         <link rel="apple-touch-icon" sizes="60x60" href="/img/favicon/apple-icon-60x60.png">
@@ -34,11 +34,11 @@
         ================================================== -->
         <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script>
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-        
-        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
-        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
-        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-sanitize.js"></script>
-        <script src="//localhost/too/js/too.js"></script>
+
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js" integrity="sha384-R6kAKgTgRiD5889XyzYD/aMryNA4Yr9EBnt6rIXuukLgVONifQDnHNaadrSNakQl" crossorigin="anonymous"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular-route.min.js" integrity="sha384-memfhCr3qU++lyUeAXqU4MzCrirdhXFyP6Fawut37YHvTSzCfZMjt4iXJ+ry+IZc" crossorigin="anonymous"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular-sanitize.min.js" integrity="sha384-KDyf7BSfs2TyNIlTqO/JYe5a7xO5C0DBp+I0sz9MFlkserxNnVzHst6S/ShCr1vG" crossorigin="anonymous"></script>
+        <script src="<?php echo config('app.url') ?>/js/too.js"></script>
         
         <meta name="msapplication-TileColor" content="#ffffff">
         <meta name="msapplication-TileImage" content="/img/favicon/ms-icon-144x144.png">
