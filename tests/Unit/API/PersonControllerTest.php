@@ -84,7 +84,7 @@ class PersonControllerTest extends TestCase
     /**
      * Update a person item.
      *
-     * @depends testInsertPerson
+     * @depends testShowPerson
      * @return void
      */
     public function testUpdateExistingPerson()
@@ -106,7 +106,8 @@ class PersonControllerTest extends TestCase
                 'cause_of_death' => null,
                 'notes' => null
              ]);
-        $this->assertDatabaseHas('people', ['id' => $id,
+        $this->assertDatabaseHas('people', [
+            'id' => $id,
             'tree_id' => Tree::where('title', '=', 'Washington Family Tree')->firstOrFail()->id,
             'name' => 'George Washington, Sr.',
             'gender_id' => $gender,

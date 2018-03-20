@@ -15,12 +15,12 @@ class RelationshipControllerTest extends TestCase
      */
     public function testInsertRelationshipWithoutSlug()
     {
-        $this->post('/api/v1/relationship', ['title' => 'Parent/Child'], ['HTTP_X-Requested-With' => 'XMLHttpRequest'])
+        $this->post('/api/v1/relationship', ['title' => 'Friends'], ['HTTP_X-Requested-With' => 'XMLHttpRequest'])
              ->assertJson([
-                 'slug' => 'parentchild',
-                 'title' => 'Parent/Child'
+                 'slug' => 'friends',
+                 'title' => 'Friends'
              ]);
-        $this->assertDatabaseHas('relationships', ['slug' => 'parentchild', 'title' => 'Parent/Child']);
+        $this->assertDatabaseHas('relationships', ['slug' => 'friends', 'title' => 'Friends']);
     }
     
     /**
@@ -30,11 +30,11 @@ class RelationshipControllerTest extends TestCase
      */
     public function testInsertRelationshipWithoutTitle()
     {
-        $this->post('/api/v1/relationship', ['slug' => 'dating'], ['HTTP_X-Requested-With' => 'XMLHttpRequest'])
+        $this->post('/api/v1/relationship', ['slug' => 'buddies'], ['HTTP_X-Requested-With' => 'XMLHttpRequest'])
              ->assertJson([
                  'title' => ['The title field is required.'],
              ]);
-        $this->assertDatabaseMissing('relationships', ['slug' => 'dating']);
+        $this->assertDatabaseMissing('relationships', ['slug' => 'buddies']);
     }
     
     /**
@@ -45,11 +45,11 @@ class RelationshipControllerTest extends TestCase
      */
     public function testShowRelationship()
     {
-        $id = Relationship::where('slug','parentchild')->firstOrFail()->id;
+        $id = Relationship::where('slug','friends')->firstOrFail()->id;
         $this->get('/api/v1/relationship/'.$id, ['HTTP_X-Requested-With' => 'XMLHttpRequest'])
              ->assertJson([
-                 'slug' => 'parentchild',
-                 'title' => 'Parent/Child'
+                 'slug' => 'friends',
+                 'title' => 'Friends'
              ]);
     }
     
@@ -60,12 +60,12 @@ class RelationshipControllerTest extends TestCase
      */
     public function testInsertRelationshipWithCustomSlug()
     {
-        $this->post('/api/v1/relationship/', ['slug' => 'godparent-godchild', 'title' => 'Godparent/Godchild'], ['HTTP_X-Requested-With' => 'XMLHttpRequest'])
+        $this->post('/api/v1/relationship/', ['slug' => 'cousins', 'title' => 'Cousins'], ['HTTP_X-Requested-With' => 'XMLHttpRequest'])
              ->assertJson([
-                 'slug' => 'godparent-godchild',
-                 'title' => 'Godparent/Godchild'
+                 'slug' => 'cousins',
+                 'title' => 'Cousins'
              ]);
-        $this->assertDatabaseHas('relationships', ['slug' => 'godparent-godchild', 'title' => 'Godparent/Godchild']);
+        $this->assertDatabaseHas('relationships', ['slug' => 'cousins', 'title' => 'Cousins']);
     }
     
     /**
@@ -76,13 +76,13 @@ class RelationshipControllerTest extends TestCase
      */
     public function testUpdateExistingRelationship()
     {
-        $id = Relationship::where('slug','godparent-godchild')->firstOrFail()->id;
-        $this->put('/api/v1/relationship/'.$id, ['title' => 'Godparent & Godchild'], ['HTTP_X-Requested-With' => 'XMLHttpRequest'])
+        $id = Relationship::where('slug','cousins')->firstOrFail()->id;
+        $this->put('/api/v1/relationship/'.$id, ['title' => 'Cousin'], ['HTTP_X-Requested-With' => 'XMLHttpRequest'])
              ->assertJson([
-                 'slug' => 'godparent-godchild',
-                 'title' => 'Godparent & Godchild',
+                 'slug' => 'cousins',
+                 'title' => 'Cousin',
              ]);
-        $this->assertDatabaseHas('relationships', ['id' => $id, 'slug' => 'godparent-godchild', 'title' => 'Godparent & Godchild']);
+        $this->assertDatabaseHas('relationships', ['id' => $id, 'slug' => 'cousins', 'title' => 'Cousin']);
     }
     
     /**
@@ -106,7 +106,7 @@ class RelationshipControllerTest extends TestCase
      * @return void
      */
     public function testRemoveRelationship() {
-        $id = Relationship::where('slug','godparent-godchild')->firstOrFail()->id;
+        $id = Relationship::where('slug','cousins')->firstOrFail()->id;
         $this->delete('/api/v1/relationship/'.$id, ['HTTP_X-Requested-With' => 'XMLHttpRequest']);
         $this->assertDatabaseMissing('relationships', ['id' => $id]);
     }

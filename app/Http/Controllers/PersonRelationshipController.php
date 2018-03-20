@@ -40,8 +40,6 @@ class PersonRelationshipController extends Controller
             'person1_id' => 'required',
             'person2_id' => 'required',
             'relationship_id' => 'required',
-            'role1_id' => 'required',
-            'role2_id' => 'required'
         ]);
         
         $data = $request->all();

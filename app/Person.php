@@ -160,4 +160,69 @@ class Person extends Model
     public function link() {
         return "<a href=\"". config('app.url') ."/person/". $this->id ."\">". $this->name ."</a>";
     }
+    
+    /**
+     * Update the person's parent.
+     */
+    public function updateParent($role, $parent_id = null) {
+        if( $role == "Father" ) {
+            $parent = $this->father;
+        }
+        else {
+            $parent = $this->mother;
+        }
+        if( $parent === null && $parent_id === null) {
+            return;
+        }
+        elseif( $parent === null ) {
+            PersonRelationship::create([
+                'person1_id' => $parent_id,
+                'role1_id' => Role::where('title', '=', $role)->first()->id,
+
+                'person2_id' => $this->id,
+                'role2_id' => $this->getChildRole(),
+
+                'relationship_id' => Relationship::where('title', '=', 'Parent/Child')->first()->id
+            ]);
+        }
+        else {
+            if( $parent->id == $parent_id ) {
+                return;
+            }
+            $relations = PersonRelationship::findRelation($this->id, $parent->id);
+            foreach($relations->all() as $relate) {
+                $relate->delete();
+            }
+            if( $parent_id === null ) {
+                return;
+            }
+            PersonRelationship::create([
+                'person1_id' => $parent_id,
+                'role1_id' => Role::where('title', '=', $role)->first()->id,
+
+                'person2_id' => $this->id,
+                'role2_id' => $this->getChildRole(),
+
+                'relationship_id' => Relationship::where('title', '=', 'Parent/Child')->first()->id
+            ]);
+        }
+    }
+    
+    /**
+     * Get the person's child role.
+     */
+    public function getChildRole() {
+        if( !isset($this->gender_id) ) {
+            return Role::where('title', '=', 'Child')->first()->id;
+        }
+        elseif( $this->gender_id == Gender::where('title', '=', 'Female')->first()->id ) {
+            return Role::where('title', '=', 'Daughter')->first()->id;
+        }
+        elseif( $this->gender_id == Gender::where('title', '=', 'Female')->first()->id ) {
+            return Role::where('title', '=', 'Son')->first()->id;
+        }
+        else {
+            return Role::where('title', '=', 'Child')->first()->id;
+        }
+    }
 }

@@ -17,5 +17,6 @@ class RelationshipsSeeder extends Seeder
         Relationship::create(['title' => 'Dating']);
         Relationship::create(['title' => 'Adopted Parent/Child']);
         Relationship::create(['title' => 'Godparent/Godchild']);
+        Relationship::create(['title' => 'Spouse']);
     }
 }

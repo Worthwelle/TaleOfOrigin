@@ -3,6 +3,8 @@
 namespace TaleOfOrigin\Http\Controllers;
 
 use TaleOfOrigin\Person;
+use TaleOfOrigin\Gender;
+use TaleOfOrigin\Tree;
 use TaleOfOrigin\PersonRelationship;
 use TaleOfOrigin\Role;
 use TaleOfOrigin\Relationship;
@@ -99,7 +101,7 @@ class PersonController extends Controller
     public function show($id)
     {
         return Cache::remember('Person'.$id, 60, function () use ($id) {
-            return Person::with('tree')->find($id)->append('father','mother','children','siblings');
+            return Person::with('tree','relationships1','relationships2')->find($id)->append('father','mother','children','siblings');
         });
     }
 
@@ -111,7 +113,15 @@ class PersonController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data['person'] = Cache::remember('Person'.$id, 60, function () use ($id) {
+            return Person::with('tree')->find($id)->append('father','mother','children','siblings');
+        });
+        $data['genders'] = Cache::remember('Genders', 60, function () use ($id) {
+            return Gender::all();
+        });
+        $tree_id = $data['person']['tree_id'];
+        $data['people'] = Person::where('tree_id','=',$tree_id)->with('gender')->get(['id','name','gender_id']);
+        return $data;
     }
 
     /**
@@ -129,7 +139,13 @@ class PersonController extends Controller
         }
         $data = $request->all();
         $person->fill($data);
+        $mother_id = isset($data['mother_id'])?$data['mother_id']:null;
+        $father_id = isset($data['father_id'])?$data['father_id']:null;
+        $person->updateParent("Mother", $mother_id);
+        $person->updateParent("Father", $father_id);
+        
         $person->save();
+        Cache::forget('Person'.$id);
         return $person;
     }
 

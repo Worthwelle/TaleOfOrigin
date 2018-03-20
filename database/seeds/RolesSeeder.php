@@ -32,5 +32,8 @@ class RolesSeeder extends Seeder
         Role::create(['title' => 'Godmother']);
         Role::create(['title' => 'Godson']);
         Role::create(['title' => 'Goddaughter']);
+        Role::create(['title' => 'Husband']);
+        Role::create(['title' => 'Wife']);
+        Role::create(['title' => 'Spouse']);
     }
 }

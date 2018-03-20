@@ -15,12 +15,12 @@ class GenderControllerTest extends TestCase
      */
     public function testInsertGenderWithoutSlug()
     {
-        $this->post('/api/v1/gender', ['title' => 'Female'], ['HTTP_X-Requested-With' => 'XMLHttpRequest'])
+        $this->post('/api/v1/gender', ['title' => 'newGender'], ['HTTP_X-Requested-With' => 'XMLHttpRequest'])
              ->assertJson([
-                 'slug' => 'female',
-                 'title' => 'Female'
+                 'slug' => 'newgender',
+                 'title' => 'newGender'
              ]);
-        $this->assertDatabaseHas('genders', ['slug' => 'female', 'title' => 'Female']);
+        $this->assertDatabaseHas('genders', ['slug' => 'newgender', 'title' => 'newGender']);
     }
     
     /**
@@ -30,11 +30,11 @@ class GenderControllerTest extends TestCase
      */
     public function testInsertGenderWithoutTitle()
     {
-        $this->post('/api/v1/gender', ['slug' => 'male'], ['HTTP_X-Requested-With' => 'XMLHttpRequest'])
+        $this->post('/api/v1/gender', ['slug' => 'secondGender'], ['HTTP_X-Requested-With' => 'XMLHttpRequest'])
              ->assertJson([
                  'title' => ['The title field is required.'],
              ]);
-        $this->assertDatabaseMissing('genders', ['slug' => 'male']);
+        $this->assertDatabaseMissing('genders', ['slug' => 'secondGender']);
     }
     
     /**
@@ -45,11 +45,11 @@ class GenderControllerTest extends TestCase
      */
     public function testShowGender()
     {
-        $id = Gender::where('slug','female')->firstOrFail()->id;
+        $id = Gender::where('slug','newgender')->firstOrFail()->id;
         $this->get('/api/v1/gender/'.$id, ['HTTP_X-Requested-With' => 'XMLHttpRequest'])
              ->assertJson([
-                 'slug' => 'female',
-                 'title' => 'Female'
+                 'slug' => 'newgender',
+                 'title' => 'newGender'
              ]);
     }
     
@@ -60,12 +60,12 @@ class GenderControllerTest extends TestCase
      */
     public function testInsertGenderWithCustomSlug()
     {
-        $this->post('/api/v1/gender/', ['slug' => 'ftm', 'title' => 'Female'], ['HTTP_X-Requested-With' => 'XMLHttpRequest'])
+        $this->post('/api/v1/gender/', ['slug' => 'ng', 'title' => 'newGender2'], ['HTTP_X-Requested-With' => 'XMLHttpRequest'])
              ->assertJson([
-                 'slug' => 'ftm',
-                 'title' => 'Female'
+                 'slug' => 'ng',
+                 'title' => 'newGender2'
              ]);
-        $this->assertDatabaseHas('genders', ['slug' => 'ftm', 'title' => 'Female']);
+        $this->assertDatabaseHas('genders', ['slug' => 'ng', 'title' => 'newGender2']);
     }
     
     /**
@@ -76,13 +76,13 @@ class GenderControllerTest extends TestCase
      */
     public function testUpdateExistingGender()
     {
-        $id = Gender::where('slug','ftm')->firstOrFail()->id;
-        $this->put('/api/v1/gender/'.$id, ['title' => 'Female to Male'], ['HTTP_X-Requested-With' => 'XMLHttpRequest'])
+        $id = Gender::where('slug','ng')->firstOrFail()->id;
+        $this->put('/api/v1/gender/'.$id, ['title' => 'newGender3'], ['HTTP_X-Requested-With' => 'XMLHttpRequest'])
              ->assertJson([
-                 'slug' => 'ftm',
-                 'title' => 'Female to Male',
+                 'slug' => 'ng',
+                 'title' => 'newGender3',
              ]);
-        $this->assertDatabaseHas('genders', ['id' => $id, 'slug' => 'ftm', 'title' => 'Female to Male']);
+        $this->assertDatabaseHas('genders', ['id' => $id, 'slug' => 'ng', 'title' => 'newGender3']);
     }
     
     /**
@@ -92,7 +92,7 @@ class GenderControllerTest extends TestCase
      */
     public function testUpdateNonExistantGender()
     {
-        $this->put('/api/v1/gender/10000', ['title' => 'Agender'], ['HTTP_X-Requested-With' => 'XMLHttpRequest'])
+        $this->put('/api/v1/gender/10000', ['title' => 'Non-Gender'], ['HTTP_X-Requested-With' => 'XMLHttpRequest'])
              ->assertJson([
                  'error' => '404',
              ]);
@@ -106,7 +106,7 @@ class GenderControllerTest extends TestCase
      * @return void
      */
     public function testRemoveGender() {
-        $id = Gender::where('slug','female')->firstOrFail()->id;
+        $id = Gender::where('slug','ng')->firstOrFail()->id;
         $this->delete('/api/v1/gender/'.$id, ['HTTP_X-Requested-With' => 'XMLHttpRequest']);
         $this->assertDatabaseMissing('genders', ['id' => $id]);
     }
